@@ -7,11 +7,11 @@ export default function Navbar() {
 
     return (
         <>
-            <nav className="fixed top-4 left-1/2 -translate-x-1/2 z-50 w-[calc(100%-2rem)] max-w-5xl rounded-2xl border border-violet-500/25 bg-[#1a1040]/75 backdrop-blur-md min-h-[88px] md:h-[96px] h-auto transition-all duration-300 font-space text-white shadow-2xl shadow-violet-900/30">
-                <div className="h-full min-h-[88px] px-6 flex items-center justify-between">
+            <nav className="fixed top-4 left-1/2 -translate-x-1/2 z-50 w-[calc(100%-2rem)] max-w-5xl rounded-2xl border border-violet-500/25 bg-[#1a1040]/75 backdrop-blur-md min-h-[56px] md:min-h-[64px] h-auto transition-all duration-300 font-space text-white shadow-2xl shadow-violet-900/30">
+                <div className="h-full min-h-[56px] md:min-h-[64px] px-6 py-1 flex items-center justify-between">
                     {/* Logo */}
-                    <Link to="/" className="flex items-center cursor-pointer group py-1">
-                        <img src="/AstraMinds.svg" alt="AstraMinds" className="h-20 md:h-24 w-auto object-contain transition-transform group-hover:scale-105 drop-shadow-[0_4px_16px_rgba(253,105,13,0.35)]" />
+                    <Link to="/" className="flex items-center cursor-pointer group py-0.5">
+                        <img src="/AstraMinds.svg" alt="AstraMinds" className="h-10 md:h-12 w-auto object-contain transition-transform group-hover:scale-105 drop-shadow-[0_2px_10px_rgba(253,105,13,0.35)]" />
                     </Link>
 
                     {/* Center Navigation */}
