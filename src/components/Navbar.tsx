@@ -1,6 +1,7 @@
 import { Menu, X } from 'lucide-react';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import PwaInstallButton from './pwa/PwaInstallButton';
 
 export default function Navbar() {
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -23,7 +24,8 @@ export default function Navbar() {
                     </div>
 
                     {/* Right Side */}
-                    <div className="hidden md:flex items-center gap-6">
+                    <div className="hidden md:flex items-center gap-4">
+                        <PwaInstallButton />
                         <Link to="/login" className="text-sm font-medium text-teal-200 hover:text-white transition-colors">Log In</Link>
                         <Link to="/signup" className="text-sm font-semibold text-white bg-gradient-to-r from-violet-600 to-indigo-500 px-5 py-2 rounded-full hover:from-violet-500 hover:to-indigo-400 hover:scale-105 transition-all duration-300 shadow-[0_0_20px_rgba(139,92,246,0.5)]">
                             Get Started
@@ -32,6 +34,7 @@ export default function Navbar() {
 
                     {/* Mobile Toggle */}
                     <div className="flex items-center gap-2 md:hidden">
+                        <PwaInstallButton variant="icon" />
                         <button
                             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
                             className="p-2 rounded-lg text-gray-300 hover:text-white hover:bg-white/10 transition-colors"
@@ -48,7 +51,10 @@ export default function Navbar() {
                         <a href="#spotlight" onClick={() => setIsMobileMenuOpen(false)} className="text-teal-200 hover:text-white font-medium text-lg">Spotlight</a>
                         <a href="#about" onClick={() => setIsMobileMenuOpen(false)} className="text-teal-200 hover:text-white font-medium text-lg">Why It Matters</a>
                         <a href="#faq" onClick={() => setIsMobileMenuOpen(false)} className="text-teal-200 hover:text-white font-medium text-lg">FAQ</a>
-                        <div className="h-px bg-violet-500/20 w-full my-2"></div>
+                        <div className="pt-1">
+                            <PwaInstallButton className="w-full justify-center py-2.5 text-sm" label="Install AstraMinds App" />
+                        </div>
+                        <div className="h-px bg-violet-500/20 w-full my-1"></div>
                         <Link to="/login" onClick={() => setIsMobileMenuOpen(false)} className="text-teal-200 hover:text-white font-medium text-lg">Log In</Link>
                         <Link to="/signup" onClick={() => setIsMobileMenuOpen(false)} className="bg-gradient-to-r from-violet-600 to-indigo-500 text-white px-5 py-3 rounded-xl font-bold text-lg text-center shadow-lg transition-all">Get Started</Link>
                     </div>

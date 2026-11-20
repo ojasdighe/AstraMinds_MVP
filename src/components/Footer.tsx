@@ -1,5 +1,6 @@
 import { Instagram, Twitter, Mail } from 'lucide-react';
 import HalftoneWordmarkFooter from './ui/halftone-wordmark-footer';
+import PwaInstallButton from './pwa/PwaInstallButton';
 
 export default function Footer() {
     return (
@@ -44,6 +45,7 @@ export default function Footer() {
                             <li><a href="#features" className="text-teal-300/70 hover:text-white transition-colors text-sm">Features</a></li>
                             <li><a href="#spotlight" className="text-teal-300/70 hover:text-white transition-colors text-sm">Spotlight</a></li>
                             <li><a href="#faq" className="text-teal-300/70 hover:text-white transition-colors text-sm">FAQ</a></li>
+                            <li className="pt-1"><PwaInstallButton label="Install Mobile App" className="text-xs" /></li>
                         </ul>
                     </div>
 

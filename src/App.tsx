@@ -14,6 +14,7 @@ import SignupPage from './pages/SignupPage';
 import ProtectedRoute from './components/ProtectedRoute';
 import { useEffect } from 'react';
 import NotFoundGlitchPreview from './components/NotFound';
+import PwaInstallBanner from './components/pwa/PwaInstallBanner';
 
 // Dashboard
 import DashboardLayout from './dashboard/DashboardLayout';
@@ -63,6 +64,7 @@ function LandingPage() {
 function App() {
     return (
         <BrowserRouter>
+            <PwaInstallBanner />
             <Routes>
                 {/* Public */}
                 <Route path="/" element={<LandingPage />} />

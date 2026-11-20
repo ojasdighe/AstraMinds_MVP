@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { Menu, Moon, Sun, Bell, Gift, CheckCircle, Trophy, Sparkles, Shield, Flame, Zap, IndianRupee, Star } from 'lucide-react';
 import { useDashboard } from './DashboardLayout';
+import PwaInstallButton from '../components/pwa/PwaInstallButton';
 
 interface TopNavbarProps {
     onMenuClick?: () => void;
@@ -78,6 +79,10 @@ export default function TopNavbar({ onMenuClick, isDarkMode, onToggleTheme, user
                         )}
                     </div>
                 )}
+
+                {/* PWA Install Button (hidden when already installed) */}
+                <PwaInstallButton variant="pill" className="hidden sm:inline-flex" />
+                <PwaInstallButton variant="icon" className="sm:hidden" />
 
                 <div className="relative" ref={notifRef}>
                     <button 

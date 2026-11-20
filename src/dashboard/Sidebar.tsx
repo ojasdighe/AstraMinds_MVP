@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { LayoutDashboard, Brain, ShieldCheck, Trophy, LogOut, Settings, PanelLeftOpen, PanelLeftClose, ShoppingBag, Target, Gift, ReceiptText, Layers, Wallet } from 'lucide-react';
+import PwaInstallButton from '../components/pwa/PwaInstallButton';
 
 const links = [
     { to: '/dashboard', icon: LayoutDashboard, label: 'Home', end: true },
@@ -115,6 +116,15 @@ export default function Sidebar() {
                     </NavLink>
                 ))}
             </nav>
+
+            {/* PWA Install */}
+            <div className={`pt-2 bg-transparent border-0 border-transparent ${collapsed ? 'px-3' : 'px-4'}`}>
+                <PwaInstallButton
+                    variant={collapsed ? 'icon' : 'sidebar'}
+                    label="Install App"
+                    className="w-full justify-center"
+                />
+            </div>
 
             {/* Logout */}
             <div className={`py-4 bg-transparent border-0 border-transparent ${collapsed ? 'px-3' : 'px-4'}`}>
