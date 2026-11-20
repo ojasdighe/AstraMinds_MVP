@@ -156,14 +156,20 @@ async function handleGetQuiz(req: AuthenticatedRequest, res: any, quizType: 'mon
         return;
     }
 
-    const aiQuestions = await generateAiQuizQuestions(quizType, {
-        age: user.age,
-        grade: user.grade,
-        nickname: user.nickname || user.full_name,
-    });
+    let aiQuestions: QuizQuestionRecord[] = [];
+    try {
+        aiQuestions = await generateAiQuizQuestions(quizType, {
+            age: user.age,
+            grade: user.grade,
+            nickname: user.nickname || user.full_name,
+        });
+    } catch (err: any) {
+        console.warn(`[handleGetQuiz] AI generation failed (${err?.message || err}), using fallback quiz bank`);
+    }
+
     let sample: QuizQuestionRecord[];
 
-    if (aiQuestions.length === 5) {
+    if (Array.isArray(aiQuestions) && aiQuestions.length === 5) {
         store.quizQuestions.push(...aiQuestions);
         sample = aiQuestions;
     } else {
@@ -254,8 +260,20 @@ function handleSubmitQuiz(req: AuthenticatedRequest, res: any, quizType: 'money'
 }
 
 router.get('/weekly-quiz', requireAuth, async (req: AuthenticatedRequest, res) => {
-    const quizType = normalizeQuizType(req.query.type);
-    await handleGetQuiz(req, res, quizType);
+    try {
+        const quizType = normalizeQuizType(req.query.type);
+        await handleGetQuiz(req, res, quizType);
+    } catch (err: any) {
+        console.error('[weekly-quiz] Error handling quiz request:', err);
+        const bank = store.quizQuestions.filter(q => q.quiz_type === 'money');
+        const fallbackSample = sampleArray(bank, 5);
+        res.status(200).json({
+            quiz_type: 'money',
+            questions: fallbackSample.map(serializeQuizQuestion),
+            already_attempted: false,
+            coins_earned_this_week: 0,
+        });
+    }
 });
 
 router.post('/submit-quiz', requireAuth, (req: AuthenticatedRequest, res) => {
@@ -264,7 +282,19 @@ router.post('/submit-quiz', requireAuth, (req: AuthenticatedRequest, res) => {
 });
 
 router.get('/safety-quiz', requireAuth, async (req: AuthenticatedRequest, res) => {
-    await handleGetQuiz(req, res, 'safety');
+    try {
+        await handleGetQuiz(req, res, 'safety');
+    } catch (err: any) {
+        console.error('[safety-quiz] Error handling safety quiz request:', err);
+        const bank = store.quizQuestions.filter(q => q.quiz_type === 'safety');
+        const fallbackSample = sampleArray(bank, 5);
+        res.status(200).json({
+            quiz_type: 'safety',
+            questions: fallbackSample.map(serializeQuizQuestion),
+            already_attempted: false,
+            coins_earned_this_week: 0,
+        });
+    }
 });
 
 router.post('/submit-safety-quiz', requireAuth, (req: AuthenticatedRequest, res) => {

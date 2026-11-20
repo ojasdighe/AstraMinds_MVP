@@ -26,15 +26,16 @@ function getGeminiClient(): GoogleGenAI | null {
     });
 }
 
-const GEMINI_MODEL = 'gemini-4-hydrogen';
-const GEMINI_FAST_MODEL = 'gemini-3.1-flash-lite';
+const GEMINI_MODEL = process.env.GEMINI_MODEL || 'gemini-2.5-flash';
+const GEMINI_FAST_MODEL = process.env.GEMINI_FAST_MODEL || 'gemini-2.0-flash';
+const GEMINI_FALLBACK_MODEL = 'gemini-1.5-flash';
 
 // Retry a Gemini call up to maxRetries times on transient errors (503, 429, 500).
 // Uses exponential backoff: 500ms, 1000ms, 2000ms…
 async function withRetry<T>(
     fn: () => Promise<T>,
-    maxRetries = 3,
-    baseDelayMs = 500
+    maxRetries = 2,
+    baseDelayMs = 400
 ): Promise<T> {
     let lastError: unknown;
     for (let attempt = 0; attempt <= maxRetries; attempt++) {
@@ -65,28 +66,34 @@ async function generateContentFastWithFallback(
     }
 ) {
     const { contents, config = {}, timeoutMs = 15000 } = params;
-    const candidates: Array<{ model: string; level: ThinkingLevel }> = [
-        { model: GEMINI_FAST_MODEL, level: ThinkingLevel.MINIMAL },
-        { model: GEMINI_MODEL, level: ThinkingLevel.LOW },
+    const candidates = [
+        { model: GEMINI_FAST_MODEL },
+        { model: GEMINI_MODEL },
+        { model: GEMINI_FALLBACK_MODEL },
     ];
     let lastError: unknown;
     for (const candidate of candidates) {
         try {
-            return await withRetry(() =>
-                Promise.race([
+            return await withRetry(() => {
+                const reqConfig: Record<string, any> = { ...config };
+                // Only pass thinkingConfig on models that explicitly support it
+                if (candidate.model.includes('2.5') && config?.thinkingConfig) {
+                    reqConfig.thinkingConfig = config.thinkingConfig;
+                } else {
+                    delete reqConfig.thinkingConfig;
+                }
+
+                return Promise.race([
                     ai.models.generateContent({
                         model: candidate.model,
                         contents,
-                        config: {
-                            ...config,
-                            thinkingConfig: { thinkingLevel: candidate.level },
-                        },
+                        config: reqConfig,
                     }),
                     new Promise<never>((_, reject) =>
                         setTimeout(() => reject(new Error(`${candidate.model} timeout`)), timeoutMs)
                     ),
-                ])
-            );
+                ]);
+            }, 1);
         } catch (err) {
             lastError = err;
         }
