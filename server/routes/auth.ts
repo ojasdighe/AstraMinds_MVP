@@ -149,8 +149,10 @@ router.post('/register', (req, res) => {
     res.status(201).json({ token, user: serializeUser(user) });
 });
 
+const DEFAULT_GOOGLE_CLIENT_ID = '959185646078-7s4m1qp4159bief441dkiom9ksci6jb3.apps.googleusercontent.com';
+
 router.get('/config', (_req, res) => {
-    const googleClientId = (process.env.GOOGLE_CLIENT_ID || process.env.VITE_GOOGLE_CLIENT_ID || '').trim();
+    const googleClientId = (process.env.GOOGLE_CLIENT_ID || process.env.VITE_GOOGLE_CLIENT_ID || DEFAULT_GOOGLE_CLIENT_ID).trim();
     res.status(200).json({ google_client_id: googleClientId });
 });
 
@@ -161,7 +163,7 @@ router.post('/google', async (req, res) => {
         return;
     }
 
-    const configuredClientId = process.env.GOOGLE_CLIENT_ID || process.env.VITE_GOOGLE_CLIENT_ID;
+    const configuredClientId = process.env.GOOGLE_CLIENT_ID || process.env.VITE_GOOGLE_CLIENT_ID || DEFAULT_GOOGLE_CLIENT_ID;
 
     try {
         const verifyRes = await fetch(`https://oauth2.googleapis.com/tokeninfo?id_token=${encodeURIComponent(credential)}`);

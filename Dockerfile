@@ -3,6 +3,8 @@ FROM node:22-slim AS builder
 
 WORKDIR /app
 
+ENV VITE_GOOGLE_CLIENT_ID=959185646078-7s4m1qp4159bief441dkiom9ksci6jb3.apps.googleusercontent.com
+
 # Copy dependency manifests for optimal layer caching
 COPY package*.json ./
 RUN npm ci
@@ -18,6 +20,7 @@ FROM node:22-slim AS runner
 WORKDIR /app
 
 ENV NODE_ENV=production
+ENV GOOGLE_CLIENT_ID=959185646078-7s4m1qp4159bief441dkiom9ksci6jb3.apps.googleusercontent.com
 
 # Install runtime dependencies only (omitting devDependencies)
 COPY package*.json ./

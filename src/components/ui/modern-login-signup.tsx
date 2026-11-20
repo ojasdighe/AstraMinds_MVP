@@ -170,14 +170,15 @@ export default function ModernLoginSignup({ defaultIsLogin = true }: { defaultIs
       }
   };
 
+  const DEFAULT_GOOGLE_CLIENT_ID = '959185646078-7s4m1qp4159bief441dkiom9ksci6jb3.apps.googleusercontent.com';
+
   const strength = getPasswordStrength(form.password);
   const googleButtonRef = useRef<HTMLDivElement>(null);
   const [googleClientId, setGoogleClientId] = useState<string>(
-    () => (import.meta.env.VITE_GOOGLE_CLIENT_ID || '').trim()
+    () => (import.meta.env.VITE_GOOGLE_CLIENT_ID || DEFAULT_GOOGLE_CLIENT_ID).trim()
   );
 
   useEffect(() => {
-    if (googleClientId) return;
     let cancelled = false;
     fetch(`${API}/api/auth/config`)
       .then(res => (res.ok ? res.json() : null))
@@ -190,7 +191,7 @@ export default function ModernLoginSignup({ defaultIsLogin = true }: { defaultIs
     return () => {
       cancelled = true;
     };
-  }, [googleClientId]);
+  }, []);
 
   const handleGoogleResponse = async (response: any) => {
     setError('');
@@ -226,32 +227,43 @@ export default function ModernLoginSignup({ defaultIsLogin = true }: { defaultIs
       return;
     }
 
-    const initGoogle = () => {
-      if (window.google && googleButtonRef.current) {
-        googleButtonRef.current.innerHTML = '';
-        window.google.accounts.id.initialize({
-          client_id: googleClientId,
-          callback: (resp: any) => handleGoogleResponseRef.current(resp),
-          use_fedcm_for_prompt: false
-        });
-        window.google.accounts.id.renderButton(
-          googleButtonRef.current,
-          { type: 'standard', theme: 'outline', size: 'large', width: 320 }
-        );
+    let intervalId: any;
+    let attempts = 0;
+
+    const renderGoogleBtn = () => {
+      attempts++;
+      if (window.google?.accounts?.id && googleButtonRef.current) {
+        if (intervalId) clearInterval(intervalId);
+        try {
+          googleButtonRef.current.innerHTML = '';
+          window.google.accounts.id.initialize({
+            client_id: googleClientId,
+            callback: (resp: any) => handleGoogleResponseRef.current(resp),
+            use_fedcm_for_prompt: false
+          });
+          window.google.accounts.id.renderButton(
+            googleButtonRef.current,
+            { type: 'standard', theme: 'outline', size: 'large', width: 300 }
+          );
+        } catch (e) {
+          console.error('[Google Sign-In] Init error:', e);
+        }
+        return true;
       }
+      return false;
     };
 
-    if (window.google) {
-      initGoogle();
-    } else {
-      const interval = setInterval(() => {
-        if (window.google) {
-          clearInterval(interval);
-          initGoogle();
+    if (!renderGoogleBtn()) {
+      intervalId = setInterval(() => {
+        if (renderGoogleBtn() || attempts > 50) {
+          clearInterval(intervalId);
         }
       }, 100);
-      return () => clearInterval(interval);
     }
+
+    return () => {
+      if (intervalId) clearInterval(intervalId);
+    };
   }, [googleClientId, isLogin, forgotPasswordStep]); // Re-render button when switching modes
 
   const handleLoginSubmit = async (e: React.FormEvent) => {
