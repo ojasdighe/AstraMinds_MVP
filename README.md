@@ -1,7 +1,7 @@
 # AstraMinds — Youth Financial Literacy & Digital Safety Platform
 
 <p align="center">
-  <img src="logo.png" alt="AstraMinds Logo" width="120" />
+  <img src="AstraMinds.svg" alt="AstraMinds Logo" width="120" />
 </p>
 
 <p align="center">
