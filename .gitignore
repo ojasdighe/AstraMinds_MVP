@@ -60,5 +60,5 @@ uploads/
 *.tsbuildinfo
 
 # Local persistent data
-data/
-.data/
+/data/
+/.data/
