@@ -1,35 +1,36 @@
 # ── Stage 1: Build ────────────────────────────────────────────────────────────
-FROM node:20-alpine AS builder
+FROM node:20-slim AS builder
 
 WORKDIR /app
 
-# Install dependencies needed for native modules (e.g. bcrypt)
-RUN apk add --no-cache python3 make g++
-
+# Copy dependency manifests for optimal layer caching
 COPY package*.json ./
 RUN npm ci
 
+# Copy full repository source code and execute the production build:
+# (tsc -b && vite build && tsc -p tsconfig.server.json)
 COPY . .
 RUN npm run build
 
 # ── Stage 2: Production Runner ───────────────────────────────────────────────
-FROM node:20-alpine AS runner
+FROM node:20-slim AS runner
 
 WORKDIR /app
 
 ENV NODE_ENV=production
 
-# Install runtime dependencies only
+# Install runtime dependencies only (omitting devDependencies)
 COPY package*.json ./
-RUN apk add --no-cache python3 make g++ && \
-    npm ci --omit=dev && \
-    apk del python3 make g++
+RUN npm ci --omit=dev
 
-# Copy built frontend SPA and built Node server
+# Copy compiled frontend SPA assets and compiled backend Node.js server
 COPY --from=builder /app/dist ./dist
 COPY --from=builder /app/dist-server ./dist-server
 
-# Cloud Run dynamically injects PORT (typically 8080)
+# Create data directory for local fallback storage when Firestore is unconfigured
+RUN mkdir -p /app/data
+
+# Cloud Run dynamically injects the PORT environment variable (default: 8080)
 ENV PORT=8080
 EXPOSE 8080
 
