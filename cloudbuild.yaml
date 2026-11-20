@@ -31,15 +31,16 @@ steps:
       - '--allow-unauthenticated'
       - '--port'
       - '8080'
-      - '--set-env-vars'
-      - 'NODE_ENV=production,FIRESTORE_ENABLED=true'
+      - '--update-env-vars'
+      - 'NODE_ENV=production,FIRESTORE_ENABLED=true,GOOGLE_CLIENT_ID=$_GOOGLE_CLIENT_ID'
 
 images:
   - 'gcr.io/$PROJECT_ID/astraminds:$BUILD_ID'
   - 'gcr.io/$PROJECT_ID/astraminds:latest'
 
 substitutions:
-  _REGION: 'asia-south1' # Default to India (Mumbai), change if your project uses another region
+  _REGION: 'asia-south2' # Deployed to India Delhi (asia-south2)
+  _GOOGLE_CLIENT_ID: '959185646078-7s4m1qp4159bief441dkiom9ksci6jb3.apps.googleusercontent.com'
 
 options:
   logging: CLOUD_LOGGING_ONLY
