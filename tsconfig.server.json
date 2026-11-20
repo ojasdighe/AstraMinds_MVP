@@ -1,0 +1,29 @@
+{
+    "compilerOptions": {
+        "target": "ES2022",
+        "module": "ESNext",
+        "moduleResolution": "bundler",
+        "allowImportingTsExtensions": false,
+        "resolveJsonModule": true,
+        "allowSyntheticDefaultImports": true,
+        "esModuleInterop": true,
+        "skipLibCheck": true,
+        "strict": true,
+        "outDir": "dist-server",
+        "rootDir": ".",
+        "baseUrl": ".",
+        "noEmit": false,
+        "declaration": false,
+        "sourceMap": true
+    },
+    "include": [
+        "server.ts",
+        "server/**/*.ts"
+    ],
+    "exclude": [
+        "node_modules",
+        "src",
+        "dist",
+        "dist-server"
+    ]
+}

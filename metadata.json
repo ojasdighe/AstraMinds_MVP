@@ -1,0 +1,6 @@
+{
+  "name": "astraminds",
+  "description": "Kid-safe money habits and digital money safety learning for ages 8–14 with savings goals, pocket money tracking, AI coaching, and weekly Money & Digital Safety Quizzes.",
+  "requestFramePermissions": ["microphone"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

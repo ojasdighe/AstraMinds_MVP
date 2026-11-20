@@ -1,0 +1,29 @@
+{
+  "name": "AstraMinds – Youth Financial Literacy & Digital Safety",
+  "short_name": "AstraMinds",
+  "description": "Pocket-money budgeting, interactive daily challenges & digital money safety superpowers built specifically for students aged 8–14.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0c1626",
+  "theme_color": "#0F2744",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/AstraMinds.ico",
+      "sizes": "64x64 32x32 24x24 16x16",
+      "type": "image/x-icon"
+    },
+    {
+      "src": "/AstraMinds.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/logo.png",
+      "sizes": "192x192 512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

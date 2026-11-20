@@ -1,0 +1,45 @@
+steps:
+  # ── Step 1: Build the container image using the multi-stage Dockerfile
+  - name: 'gcr.io/cloud-builders/docker'
+    args:
+      - 'build'
+      - '-t'
+      - 'gcr.io/$PROJECT_ID/astraminds:$COMMIT_SHA'
+      - '-t'
+      - 'gcr.io/$PROJECT_ID/astraminds:latest'
+      - '.'
+
+  # ── Step 2: Push container image to Google Container Registry
+  - name: 'gcr.io/cloud-builders/docker'
+    args:
+      - 'push'
+      - 'gcr.io/$PROJECT_ID/astraminds:$COMMIT_SHA'
+
+  # ── Step 3: Deploy to Cloud Run
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    entrypoint: gcloud
+    args:
+      - 'run'
+      - 'deploy'
+      - 'astraminds'
+      - '--image'
+      - 'gcr.io/$PROJECT_ID/astraminds:$COMMIT_SHA'
+      - '--region'
+      - '$_REGION'
+      - '--platform'
+      - 'managed'
+      - '--allow-unauthenticated'
+      - '--port'
+      - '8080'
+      - '--set-env-vars'
+      - 'NODE_ENV=production,FIRESTORE_ENABLED=true'
+
+images:
+  - 'gcr.io/$PROJECT_ID/astraminds:$COMMIT_SHA'
+  - 'gcr.io/$PROJECT_ID/astraminds:latest'
+
+substitutions:
+  _REGION: 'asia-south1' # Default to India (Mumbai), change if your project uses another region
+
+options:
+  logging: CLOUD_LOGGING_ONLY

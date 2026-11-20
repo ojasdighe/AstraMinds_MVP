@@ -1,0 +1,120 @@
+import { useEffect, useState } from 'react';
+import { Trophy, Medal, Crown } from 'lucide-react';
+import { api } from '../api';
+import { useDashboard } from '../DashboardLayout';
+
+export default function LeaderboardCard() {
+    const { user } = useDashboard();
+    const [data, setData] = useState<any>(null);
+    const [timeframe, setTimeframe] = useState<'season' | 'all_time'>('season');
+
+    useEffect(() => {
+        api.get(`/api/leaderboard?timeframe=${timeframe}`).then(setData).catch(() => { });
+    }, [user, timeframe]);
+
+    const top3 = data?.leaderboard?.slice(0, 3) ?? [];
+    const rest = data?.leaderboard?.slice(3, 10) ?? [];
+
+    const rankIcon = (rank: number) => {
+        if (rank === 1) return <Crown className="w-5 h-5 text-gray-300" />;
+        if (rank === 2) return <Medal className="w-5 h-5 text-gray-400" />;
+        if (rank === 3) return <Medal className="w-5 h-5 text-gray-400" />;
+        return <span className="text-gray-500 text-sm font-bold w-5 text-center">#{rank}</span>;
+    };
+
+    return (
+        <div className="glass-panel card-glow rounded-[24px] p-8 border border-gray-100 dark:border-white/5 relative overflow-hidden">
+            <div className="absolute -bottom-24 -left-24 w-48 h-48 bg-[#0BBFBF]/6 rounded-full blur-[60px]" />
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6 relative z-10">
+                <div className="flex items-center gap-4">
+                    <div className="w-12 h-12 bg-amber-500/15 dark:bg-[#0F2744] rounded-2xl flex items-center justify-center border border-amber-500/20 dark:border-[#1E3448] shadow-sm">
+                        <Trophy className="w-6 h-6 text-amber-400" />
+                    </div>
+                    <div>
+                        <h3 className="font-heading font-bold text-xl text-gray-900 dark:text-white tracking-tight">
+                            {timeframe === 'season' ? 'Season Leaderboard' : 'All-Time Leaderboard'}
+                        </h3>
+                        <div className="flex items-center gap-2 mt-1">
+                            <p className="text-[10px] text-gray-400 font-bold uppercase tracking-widest bg-gray-100 dark:bg-[#122236] px-2.5 py-0.5 rounded-full border border-transparent dark:border-[#1E3448]">
+                                {timeframe === 'season' ? `Season ${data?.season || 1} • Resets Sunday` : 'All-Time Rankings • Lifetime XP'}
+                            </p>
+                            {data?.your_rank && (
+                                <p className="text-xs text-gray-500 font-medium">
+                                    Rank: <span className="text-white font-bold">#{data.your_rank}</span>
+                                </p>
+                            )}
+                        </div>
+                    </div>
+                </div>
+
+                {/* Scope selector */}
+                <div className="flex items-center bg-[#0e0e0e] dark:bg-[#0e0e0e] p-1 rounded-xl border border-[#262626] self-start sm:self-auto shadow-inner">
+                    <button
+                        onClick={() => setTimeframe('season')}
+                        className={`px-3.5 py-1.5 text-xs font-bold rounded-lg transition-all ${
+                            timeframe === 'season'
+                                ? 'bg-[#262626] text-white border border-[#3e3e3e] shadow-sm'
+                                : 'text-gray-400 hover:text-white hover:bg-white/5 border border-transparent'
+                        }`}
+                    >
+                        Season {data?.season || 12}
+                    </button>
+                    <button
+                        onClick={() => setTimeframe('all_time')}
+                        className={`px-3.5 py-1.5 text-xs font-bold rounded-lg transition-all ${
+                            timeframe === 'all_time'
+                                ? 'bg-[#262626] text-white border border-[#3e3e3e] shadow-sm'
+                                : 'text-gray-400 hover:text-white hover:bg-white/5 border border-transparent'
+                        }`}
+                    >
+                        All-Time
+                    </button>
+                </div>
+            </div>
+
+            {/* Top 3 podium */}
+            {top3.length >= 3 && (
+                <div className="flex items-end justify-center gap-3 mb-5 h-24">
+                    {[top3[1], top3[0], top3[2]].map((entry: any, idx: number) => {
+                        const heights = ['h-16', 'h-24', 'h-12'];
+                        const colors = ['bg-gray-200 dark:bg-gray-700', 'bg-[#0F2744] border border-[#0BBFBF]/20', 'bg-[#0F2744] dark:bg-[#0F2744]'];
+                        const textColors = ['text-gray-600', 'text-white', 'text-gray-500 dark:text-white'];
+                        const ranks = [2, 1, 3];
+                        return (
+                            <div key={entry.name} className={`flex-1 ${colors[idx]} ${heights[idx]} rounded-t-2xl flex flex-col items-center justify-end pb-2 ${entry.is_current_user ? 'ring-2 ring-[#555]' : ''}`}>
+                                <p className={`text-xs font-bold ${textColors[idx]} truncate px-1`}>{entry.name.split(' ')[0]}</p>
+                                <p className={`text-xs ${textColors[idx]} opacity-80`}>#{ranks[idx]}</p>
+                            </div>
+                        );
+                    })}
+                </div>
+            )}
+
+            {/* Rank list */}
+            <div className="space-y-2 relative z-10">
+                {[...top3, ...rest].map((entry: any) => (
+                    <div
+                        key={entry.rank}
+                        className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-300 ${entry.is_current_user
+                                ? 'bg-[#122236] dark:bg-[#122236] border border-[#0BBFBF]/20 dark:border-[#0BBFBF]/20 shadow-[inset_0_0_15px_rgba(11,191,191,0.07)]'
+                                : 'border border-transparent hover:bg-gray-50 dark:hover:bg-white/5'
+                            }`}
+                    >
+                        <div className="w-6 flex justify-center">{rankIcon(entry.rank)}</div>
+                        <div className="flex-1 min-w-0">
+                            <p className="text-sm font-semibold text-gray-900 dark:text-white truncate">
+                                {entry.name} {entry.is_current_user && <span className="text-xs text-gray-300 ml-1">(you)</span>}
+                            </p>
+                        </div>
+                        <div className="text-right flex-shrink-0">
+                            <p className="text-[13px] font-bold text-gray-400 dark:text-white">{entry.xp.toLocaleString()} XP</p>
+                        </div>
+                    </div>
+                ))}
+                {data?.leaderboard?.length === 0 && (
+                    <p className="text-center text-gray-400 text-sm py-4">No data yet. Be the first!</p>
+                )}
+            </div>
+        </div>
+    );
+}

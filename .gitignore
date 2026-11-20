@@ -1,0 +1,64 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+venv/
+.venv/
+*.egg-info/
+
+# Environment variables — NEVER commit these
+.env
+.env.*
+!.env.example
+
+# Node
+node_modules/
+
+# Build outputs
+dist/
+dist-server/
+build/
+
+# PM2 logs
+logs/
+
+# Testing / coverage
+.coverage
+htmlcov/
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Tailwind generated
+test.css
+
+# Playwright MCP generated artifacts
+.playwright-mcp/
+
+# Playwright
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
+/playwright/.auth/
+
+
+
+.env.test.local
+
+# User uploaded files, receipts & bills
+backend/uploads/
+uploads/
+
+# TypeScript incremental build cache
+*.tsbuildinfo
+
+# Local persistent data
+data/
+.data/

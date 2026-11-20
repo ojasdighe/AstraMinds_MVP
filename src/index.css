@@ -1,0 +1,409 @@
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+@import "@fontsource-variable/geist";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --font-heading-name: 'Poppins';
+    --font-body-name: 'Work Sans';
+    --font-heading: 'Poppins', sans-serif;
+    --font-body: 'Work Sans', sans-serif;
+    --letter-spacing-heading: -0.5px;
+    --letter-spacing-body: 0px;
+    --space-base: 1rem;
+    --radius-small: 14px;
+    --radius-large: 28px;
+    --border-width: 1.5px;
+
+    /* ── Kid-Friendly Palette ──────────────────────────────
+       Base: clean white / very light blue-tinted backgrounds
+       Primary accent: teal (#0BBFBF)
+       Secondary accents: orange (#FF7A2F), blue (#3B82F6),
+                          green (#10B981), purple (#8B5CF6),
+                          coral (#FF6B9D)
+       ─────────────────────────────────────────────────── */
+    --shadow-color: 11 191 191;
+    --shadow-offset-x: 0px;
+    --shadow-offset-y: 8px;
+    --shadow-blur: 32px;
+    --shadow-spread: 0px;
+    --shadow-opacity: 0.2;
+    --shadow-custom: 0px 8px 32px rgba(11, 191, 191, 0.2);
+    --shadow-custom-hover: 0px 20px 60px rgba(11, 191, 191, 0.35);
+
+    /* Light mode — bright, airy, blue-tinted white */
+    --background: oklch(0.975 0.008 240);
+    --foreground: oklch(0.12 0.03 265);
+    --card: oklch(1 0 0);
+    --card-foreground: oklch(0.12 0.03 265);
+    --popover: oklch(1 0 0);
+    --popover-foreground: oklch(0.12 0.03 265);
+    --primary: oklch(0.72 0.14 193);         /* teal #0BBFBF */
+    --primary-foreground: oklch(1 0 0);
+    --secondary: oklch(0.95 0.005 220);
+    --secondary-foreground: oklch(0.3 0.015 220);
+    --muted: oklch(0.94 0.005 220);
+    --muted-foreground: oklch(0.5 0.01 220);
+    --accent: oklch(0.72 0.14 193);          /* teal */
+    --accent-foreground: oklch(0.1 0.02 193);
+    --destructive: oklch(0.6 0.22 25);
+    --border: oklch(0.9 0.008 220);
+    --input: oklch(0.93 0.005 220);
+    --ring: oklch(0.72 0.14 193);
+    --chart-1: oklch(0.72 0.14 193);         /* teal */
+    --chart-2: oklch(0.72 0.21 25);          /* coral */
+    --chart-3: oklch(0.84 0.19 95);          /* yellow */
+    --chart-4: oklch(0.65 0.22 310);         /* pink/purple */
+    --chart-5: oklch(0.72 0.2 142);          /* green */
+    --radius: 0.75rem;
+    --sidebar: oklch(1 0 0);
+    --sidebar-foreground: oklch(0.12 0.03 265);
+    --sidebar-primary: oklch(0.72 0.14 193);
+    --sidebar-primary-foreground: oklch(1 0 0);
+    --sidebar-accent: oklch(0.94 0.005 220);
+    --sidebar-accent-foreground: oklch(0.3 0.015 220);
+    --sidebar-border: oklch(0.9 0.008 220);
+    --sidebar-ring: oklch(0.72 0.14 193);
+  }
+
+  /* Dark Mode — deep navy base, teal accents */
+  .dark {
+    --shadow-custom: 0px 8px 32px rgba(11, 191, 191, 0.25);
+    --shadow-custom-hover: 0px 20px 60px rgba(11, 191, 191, 0.4);
+    --background: oklch(0.13 0.025 230);     /* deep navy #0D1B2A */
+    --foreground: oklch(0.96 0.01 220);
+    --card: oklch(0.17 0.03 225);            /* #122236 */
+    --card-foreground: oklch(0.96 0.01 220);
+    --popover: oklch(0.17 0.03 225);
+    --popover-foreground: oklch(0.96 0.01 220);
+    --primary: oklch(0.72 0.14 193);         /* teal #0BBFBF */
+    --primary-foreground: oklch(0.1 0.02 193);
+    --secondary: oklch(0.2 0.025 225);
+    --secondary-foreground: oklch(0.9 0.01 220);
+    --muted: oklch(0.2 0.025 225);
+    --muted-foreground: oklch(0.6 0.02 220);
+    --accent: oklch(0.72 0.14 193);          /* teal */
+    --accent-foreground: oklch(0.1 0.02 193);
+    --destructive: oklch(0.62 0.22 25);
+    --border: oklch(0.22 0.03 225);          /* #1E3448 */
+    --input: oklch(0.22 0.03 225);
+    --ring: oklch(0.72 0.14 193);
+    --chart-1: oklch(0.72 0.14 193);         /* teal */
+    --chart-2: oklch(0.72 0.22 25);          /* coral */
+    --chart-3: oklch(0.86 0.2 95);           /* yellow */
+    --chart-4: oklch(0.72 0.22 310);         /* pink */
+    --chart-5: oklch(0.74 0.21 142);         /* green */
+    --sidebar: oklch(0.13 0.025 230);        /* #0D1B2A */
+    --sidebar-foreground: oklch(0.96 0.01 220);
+    --sidebar-primary: oklch(0.72 0.14 193);
+    --sidebar-primary-foreground: oklch(0.1 0.02 193);
+    --sidebar-accent: oklch(0.2 0.025 225);
+    --sidebar-accent-foreground: oklch(0.9 0.01 220);
+    --sidebar-border: oklch(0.22 0.03 225);
+    --sidebar-ring: oklch(0.72 0.14 193);
+  }
+
+  html {
+    scroll-behavior: smooth;
+    @apply font-sans;
+  }
+  .theme {
+    --font-heading: var(--font-sans);
+    --font-sans: 'Geist Variable', sans-serif;
+  }
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+/* ============================================================
+   DARK MODE — deep navy base, teal accents
+   ============================================================ */
+html.dark body,
+html.dark #root {
+  background-color: #0D1B2A;
+  background-image:
+    radial-gradient(circle at 15% 50%, rgba(11, 191, 191, 0.05) 0%, transparent 55%),
+    radial-gradient(circle at 85% 20%, rgba(59, 130, 246, 0.04) 0%, transparent 50%),
+    radial-gradient(circle at 50% 90%, rgba(16, 185, 129, 0.03) 0%, transparent 50%);
+  color: #E2E8F0;
+}
+
+/* Navbar */
+html.dark nav.nav-blur {
+  background: rgba(13, 27, 42, 0.88) !important;
+  border-color: rgba(11, 191, 191, 0.2) !important;
+}
+
+html.dark nav.nav-blur a,
+html.dark nav.nav-blur span {
+  color: #94A3B8;
+}
+
+/* Ensure sidebar nav and sections are uniform and borderless */
+html.dark aside nav {
+  background: transparent !important;
+  border: none !important;
+  border-color: transparent !important;
+}
+
+/* ============================================================
+   DASHBOARD LAYOUT — seamless background
+   ============================================================ */
+.dashboard-layout,
+.dashboard-layout aside,
+.dashboard-layout header,
+.dashboard-layout main,
+.dashboard-layout .dashboard-content-wrapper {
+  background-color: #F0F4FF !important;
+  background-image: none !important;
+  border-color: transparent !important;
+  box-shadow: none !important;
+}
+
+html.dark .dashboard-layout,
+html.dark .dashboard-layout aside,
+html.dark .dashboard-layout header,
+html.dark .dashboard-layout main,
+html.dark .dashboard-layout .dashboard-content-wrapper {
+  background-color: #0D1B2A !important;
+  background-image: none !important;
+  border-color: transparent !important;
+  box-shadow: none !important;
+}
+
+html:not(.dark) .dashboard-layout,
+html:not(.dark) .dashboard-layout aside,
+html:not(.dark) .dashboard-layout header,
+html:not(.dark) .dashboard-layout main,
+html:not(.dark) .dashboard-layout .dashboard-content-wrapper {
+  background-color: #F0F4FF !important;
+  background-image: none !important;
+  border-color: transparent !important;
+  box-shadow: none !important;
+}
+
+/* Cards and sections */
+html.dark section {
+  background-color: transparent;
+}
+
+html.dark .bg-gray-50:not(button):not(.keep-white):not(.dashboard-layout):not(.dashboard-layout *) {
+  background-color: #0F1E2F !important;
+}
+
+html.dark .bg-white:not(button):not(.keep-white):not(.btn-white):not(.dashboard-layout):not(.dashboard-layout *) {
+  background-color: #122236 !important;
+}
+
+html.dark button.bg-white,
+html.dark button.btn-white,
+html.dark a.btn-white,
+html.dark .keep-white,
+html.dark .btn-white,
+.video-theme a.btn-white,
+.video-theme .btn-white,
+.btn-white {
+  background-color: #0BBFBF !important;
+  color: #ffffff !important;
+}
+
+html.dark button.bg-white:hover,
+html.dark button.btn-white:hover,
+html.dark .keep-white:hover,
+html.dark .btn-white:hover {
+  background-color: #09a8a8 !important;
+  color: #ffffff !important;
+}
+
+html.dark :where(h1, h2, h3, h4) {
+  color: #F1F5F9;
+}
+
+html.dark :where(p) {
+  color: #94A3B8;
+}
+
+html.dark .card-glow {
+  background: rgba(18, 34, 54, 0.75) !important;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(11, 191, 191, 0.18) !important;
+  box-shadow: 0px 4px 24px -1px rgba(11, 191, 191, 0.2), inset 0px 1px 0px rgba(11, 191, 191, 0.06);
+}
+
+
+@layer utilities {
+  .gradient-text {
+    background: linear-gradient(135deg, #0BBFBF, #3B82F6, #FF7A2F);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .gradient-bg {
+    background: linear-gradient(135deg, #0BBFBF 0%, #3B82F6 50%, #10B981 100%);
+  }
+
+  .gradient-bg-soft {
+    background: linear-gradient(135deg, #E0F7FA 0%, #EFF6FF 50%, #ECFDF5 100%);
+  }
+
+  .gradient-bg-dark {
+    background: linear-gradient(135deg, #0D1B2A 0%, #0F2744 40%, #0A1628 100%);
+  }
+
+  .card-glow {
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .card-glow:hover {
+    box-shadow: 0px 8px 32px -4px rgba(11, 191, 191, 0.35), inset 0px 1px 0px rgba(11, 191, 191, 0.08);
+    transform: translateY(-2px);
+  }
+
+  .glass-panel {
+    background: rgba(11, 191, 191, 0.05);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(11, 191, 191, 0.12);
+  }
+
+  .glass-panel-hover:hover {
+    background: rgba(11, 191, 191, 0.08);
+    border-color: rgba(11, 191, 191, 0.22);
+  }
+
+  .nav-blur {
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    background: rgba(240, 244, 255, 0.9);
+  }
+
+  .hero-orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(100px);
+    opacity: 0.55;
+    animation: float 8s ease-in-out infinite;
+    z-index: 0;
+  }
+
+  .grid-pattern {
+    background-image: linear-gradient(rgba(11, 191, 191, 0.07) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(11, 191, 191, 0.07) 1px, transparent 1px);
+    background-size: 40px 40px;
+    mask-image: linear-gradient(to bottom, black 40%, transparent 100%);
+    -webkit-mask-image: linear-gradient(to bottom, black 40%, transparent 100%);
+  }
+
+  .xp-bar {
+    background: linear-gradient(90deg, #0BBFBF, #3B82F6, #10B981);
+    border-radius: 999px;
+    animation: xpFill 2s ease-out forwards;
+  }
+
+  @keyframes xpFill {
+    from {
+      width: 0%;
+    }
+
+    to {
+      width: 72%;
+    }
+  }
+
+  .badge-shine {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .badge-shine::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(45deg, transparent 30%, rgba(255, 255, 255, 0.6) 50%, transparent 70%);
+    animation: shine 3s ease-in-out infinite;
+  }
+
+  @keyframes shine {
+    0% {
+      transform: translateX(-100%) rotate(45deg);
+    }
+
+    100% {
+      transform: translateX(100%) rotate(45deg);
+    }
+  }
+
+  .tilt-card {
+    transition: transform 0.1s ease-out;
+    transform-style: preserve-3d;
+  }
+
+  .tilt-content {
+    transform: translateZ(20px);
+  }
+
+  .floating-coin {
+    animation: float-fast 3s ease-in-out infinite;
+  }
+
+  .observe-animate {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .observe-animate.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .tech-card {
+    background: rgba(11, 191, 191, 0.06);
+    border: 1px solid rgba(11, 191, 191, 0.15);
+    backdrop-filter: blur(10px);
+  }
+
+  /* Video Theme Overrides for Landing Page */
+  .video-theme {
+    background-color: transparent !important;
+  }
+
+  .video-theme section {
+    background: transparent !important;
+  }
+
+  /* Convert all light backgrounds/cards to dark glassmorphism */
+  .video-theme .bg-white:not(button):not(.btn-white):not(.keep-white),
+  .video-theme .bg-gray-50,
+  .video-theme .bg-gray-100,
+  .video-theme .dark\:bg-gray-800,
+  .video-theme .dark\:bg-gray-900,
+  .video-theme .dark\:bg-gray-800\/50,
+  .video-theme .gradient-bg-soft {
+    background: rgba(13, 27, 42, 0.5) !important;
+    backdrop-filter: blur(12px) !important;
+    -webkit-backdrop-filter: blur(12px) !important;
+    border: 1px solid rgba(11, 191, 191, 0.18) !important;
+  }
+
+  .video-theme footer {
+    border: none !important;
+  }
+}
+
+/* Ensure Recharts bar hover cursor rectangle does not show white block behind bars */
+.recharts-tooltip-cursor {
+  fill: transparent !important;
+}

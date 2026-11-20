@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Kid-safe money habits and digital money safety learning for ages 8–14 with savings goals, pocket money tracking, AI coaching, and weekly Money &amp; Digital Safety Quizzes." />
+  <meta property="og:title" content="astraminds – Smart Money &amp; Digital Safety for Ages 8–14" />
+  <meta property="og:description" content="Kid-safe money habits and digital money safety learning for ages 8–14 with savings goals, pocket money tracking, AI coaching, and weekly Money &amp; Digital Safety Quizzes." />
+  <link rel="icon" type="image/x-icon" href="/AstraMinds.ico" />
+  <link rel="manifest" href="/manifest.json" />
+  <meta name="theme-color" content="#0F2744" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="AstraMinds" />
+  <link rel="apple-touch-icon" href="/logo.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+  <title>astraminds – Smart Money &amp; Digital Safety for Ages 8–14</title>
+</head>
+
+<body
+  class="bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 font-body transition-colors duration-300 min-h-full h-auto">
+  <div id="root"></div>
+  <script type="module" src="/src/main.tsx"></script>
+  <script>
+    if ('serviceWorker' in navigator && window.location.protocol.startsWith('http')) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js').catch(err => {
+          console.warn('[PWA] Service Worker registration failed:', err);
+        });
+      });
+    }
+  </script>
+</body>
+
+</html>

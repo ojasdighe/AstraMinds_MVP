@@ -1,0 +1,58 @@
+import { ArrowRight, ShieldCheck, Zap, Lock } from 'lucide-react';
+import { Link } from 'react-router-dom';
+
+export default function CtaSection() {
+    return (
+        <section id="cta" className="py-24 md:py-32 bg-black text-white relative overflow-hidden">
+            {/* Subtle monochrome ambient glow */}
+            <div className="absolute inset-0 pointer-events-none">
+                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[350px] bg-zinc-800/20 blur-[140px] rounded-full"></div>
+            </div>
+
+            <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
+                {/* Big Headline */}
+                <h2 className="text-4xl sm:text-5xl lg:text-6xl font-medium tracking-tight text-white mb-6 leading-tight max-w-3xl mx-auto">
+                    Ready to Build Smart Money &amp; Digital Safety Habits?
+                </h2>
+
+                <p className="text-sm sm:text-base text-zinc-400 max-w-xl mx-auto mb-10 leading-relaxed font-normal">
+                    Join young savers who track pocket money, hit big savings goals, and master online safety quizzes every week.
+                </p>
+
+                {/* Actions */}
+                <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-12">
+                    <Link
+                        to="/signup"
+                        className="btn-white w-full sm:w-auto px-8 py-3.5 rounded-2xl bg-white !text-black font-bold text-sm hover:bg-zinc-200 transition-all flex items-center justify-center gap-2 shadow-lg shadow-white/5 cursor-pointer"
+                    >
+                        <span className="!text-black font-bold">Start Playing Free</span>
+                        <ArrowRight className="w-4 h-4 !text-black" />
+                    </Link>
+
+                    <Link
+                        to="/login"
+                        className="w-full sm:w-auto px-8 py-3.5 rounded-2xl bg-zinc-900 border border-zinc-800 text-zinc-300 hover:text-white hover:bg-zinc-800/80 font-semibold text-sm transition-all flex items-center justify-center gap-2 cursor-pointer"
+                    >
+                        <span>Log In to Dashboard</span>
+                    </Link>
+                </div>
+
+                {/* Trust Indicators */}
+                <div className="flex flex-wrap items-center justify-center gap-6 sm:gap-10 text-xs text-zinc-500 font-normal">
+                    <div className="flex items-center gap-2">
+                        <Lock className="w-3.5 h-3.5 text-zinc-400" />
+                        <span>100% Kid-Safe &amp; Ad-Free</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                        <Zap className="w-3.5 h-3.5 text-zinc-400" />
+                        <span>No Real Bank Account Needed</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                        <ShieldCheck className="w-3.5 h-3.5 text-zinc-400" />
+                        <span>Free Quizzes &amp; Rewards</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+    );
+}
