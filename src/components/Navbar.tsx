@@ -17,10 +17,10 @@ export default function Navbar() {
 
                     {/* Center Navigation */}
                     <div className="hidden md:flex items-center gap-8">
-                        <a href="#features" className="text-sm font-medium text-teal-200 hover:text-white transition-colors">Features</a>
-                        <a href="#spotlight" className="text-sm font-medium text-teal-200 hover:text-white transition-colors">Spotlight</a>
-                        <a href="#about" className="text-sm font-medium text-teal-200 hover:text-white transition-colors">Why It Matters</a>
-                        <a href="#faq" className="text-sm font-medium text-teal-200 hover:text-white transition-colors">FAQ</a>
+                        <a href="/#features" className="text-sm font-medium text-teal-200 hover:text-white transition-colors">Features</a>
+                        <a href="/#spotlight" className="text-sm font-medium text-teal-200 hover:text-white transition-colors">Spotlight</a>
+                        <a href="/#about" className="text-sm font-medium text-teal-200 hover:text-white transition-colors">Why It Matters</a>
+                        <a href="/#faq" className="text-sm font-medium text-teal-200 hover:text-white transition-colors">FAQ</a>
                     </div>
 
                     {/* Right Side */}
@@ -47,10 +47,10 @@ export default function Navbar() {
                 {/* Mobile Menu */}
                 <div className={`md:hidden absolute top-full left-0 right-0 mt-2 border border-[#1E3448] bg-[#0D1B2A]/90 backdrop-blur-xl rounded-2xl transition-all duration-300 overflow-hidden ${isMobileMenuOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'}`}>
                     <div className="px-4 py-6 flex flex-col gap-5">
-                        <a href="#features" onClick={() => setIsMobileMenuOpen(false)} className="text-teal-200 hover:text-white font-medium text-lg">Features</a>
-                        <a href="#spotlight" onClick={() => setIsMobileMenuOpen(false)} className="text-teal-200 hover:text-white font-medium text-lg">Spotlight</a>
-                        <a href="#about" onClick={() => setIsMobileMenuOpen(false)} className="text-teal-200 hover:text-white font-medium text-lg">Why It Matters</a>
-                        <a href="#faq" onClick={() => setIsMobileMenuOpen(false)} className="text-teal-200 hover:text-white font-medium text-lg">FAQ</a>
+                        <a href="/#features" onClick={() => setIsMobileMenuOpen(false)} className="text-teal-200 hover:text-white font-medium text-lg">Features</a>
+                        <a href="/#spotlight" onClick={() => setIsMobileMenuOpen(false)} className="text-teal-200 hover:text-white font-medium text-lg">Spotlight</a>
+                        <a href="/#about" onClick={() => setIsMobileMenuOpen(false)} className="text-teal-200 hover:text-white font-medium text-lg">Why It Matters</a>
+                        <a href="/#faq" onClick={() => setIsMobileMenuOpen(false)} className="text-teal-200 hover:text-white font-medium text-lg">FAQ</a>
                         <div className="pt-1">
                             <PwaInstallButton className="w-full justify-center py-2.5 text-sm" label="Install AstraMinds App" />
                         </div>

@@ -1,4 +1,5 @@
-import { Instagram, Twitter, Mail } from 'lucide-react';
+import { Instagram, Twitter, Mail, Phone } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import HalftoneWordmarkFooter from './ui/halftone-wordmark-footer';
 import PwaInstallButton from './pwa/PwaInstallButton';
 
@@ -42,9 +43,9 @@ export default function Footer() {
                     <div>
                         <h4 className="font-heading font-bold text-white mb-6 uppercase tracking-wider text-sm">Product</h4>
                         <ul className="space-y-4">
-                            <li><a href="#features" className="text-teal-300/70 hover:text-white transition-colors text-sm">Features</a></li>
-                            <li><a href="#spotlight" className="text-teal-300/70 hover:text-white transition-colors text-sm">Spotlight</a></li>
-                            <li><a href="#faq" className="text-teal-300/70 hover:text-white transition-colors text-sm">FAQ</a></li>
+                            <li><a href="/#features" className="text-teal-300/70 hover:text-white transition-colors text-sm">Features</a></li>
+                            <li><a href="/#spotlight" className="text-teal-300/70 hover:text-white transition-colors text-sm">Spotlight</a></li>
+                            <li><a href="/#faq" className="text-teal-300/70 hover:text-white transition-colors text-sm">FAQ</a></li>
                             <li className="pt-1"><PwaInstallButton label="Install Mobile App" className="text-xs" /></li>
                         </ul>
                     </div>
@@ -52,12 +53,22 @@ export default function Footer() {
                     <div>
                         <h4 className="font-heading font-bold text-white mb-6 uppercase tracking-wider text-sm">Legal & Support</h4>
                         <ul className="space-y-4">
-                            <li><a href="#" className="text-teal-300/70 hover:text-white transition-colors text-sm">Privacy Policy</a></li>
-                            <li><a href="#" className="text-teal-300/70 hover:text-white transition-colors text-sm">Terms of Service</a></li>
-                            <li><a href="#" className="text-teal-300/70 hover:text-white transition-colors text-sm">Help Center</a></li>
+                            <li><Link to="/privacy-policy" className="text-teal-300/70 hover:text-white transition-colors text-sm">Privacy Policy</Link></li>
+                            <li><Link to="/terms-of-service" className="text-teal-300/70 hover:text-white transition-colors text-sm">Terms of Service</Link></li>
+                            <li><a href="/#faq" className="text-teal-300/70 hover:text-white transition-colors text-sm">Help Center</a></li>
                             <li>
-                                <a href="#" className="text-teal-300/70 hover:text-white transition-colors text-sm flex items-center gap-2">
-                                    <Mail className="w-4 h-4" /> Contact Us
+                                <Link to="/contact" className="text-teal-300/70 hover:text-white transition-colors text-sm flex items-center gap-2">
+                                    <Mail className="w-4 h-4 flex-shrink-0" /> Contact Us
+                                </Link>
+                            </li>
+                            <li>
+                                <a href="mailto:asterrasolutions@gmail.com" className="text-teal-300/70 hover:text-white transition-colors text-xs flex items-center gap-2 break-all">
+                                    <Mail className="w-3.5 h-3.5 flex-shrink-0 text-cyan-400" /> asterrasolutions@gmail.com
+                                </a>
+                            </li>
+                            <li>
+                                <a href="tel:+917378655805" className="text-teal-300/70 hover:text-white transition-colors text-xs flex items-center gap-2">
+                                    <Phone className="w-3.5 h-3.5 flex-shrink-0 text-emerald-400" /> +91 73786 55805
                                 </a>
                             </li>
                         </ul>

@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom';
+
 interface AppFooterProps {
     className?: string;
     compact?: boolean;
@@ -37,10 +39,16 @@ export default function AppFooter({ className = '', compact = false }: AppFooter
                         AstraMinds - An Asterra Soultions Initiative
                     </span>
                 </div>
-                <div className="flex items-center gap-6">
-                    <span className="hidden md:inline text-teal-600 dark:text-teal-400 font-medium">
-                        Smart Financial Habits & Digital Safety
-                    </span>
+                <div className="flex flex-wrap items-center justify-center gap-4 sm:gap-6">
+                    <Link to="/privacy-policy" className="hover:text-teal-500 dark:hover:text-teal-300 transition-colors">
+                        Privacy Policy
+                    </Link>
+                    <Link to="/terms-of-service" className="hover:text-teal-500 dark:hover:text-teal-300 transition-colors">
+                        Terms of Service
+                    </Link>
+                    <Link to="/contact" className="hover:text-teal-500 dark:hover:text-teal-300 transition-colors">
+                        Contact Us
+                    </Link>
                     <span>
                         © {currentYear} AstraMinds. All rights reserved.
                     </span>
