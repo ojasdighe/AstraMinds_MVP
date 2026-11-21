@@ -22,7 +22,7 @@ export default function PwaInstallBanner() {
         <aside
           role="region"
           aria-label="Install AstraMinds application"
-          className="fixed bottom-4 left-4 right-4 md:left-auto md:right-6 md:bottom-6 z-50 md:max-w-md animate-slide-up"
+          className="fixed bottom-24 left-3 right-3 sm:left-4 sm:right-4 md:left-auto md:right-24 md:bottom-6 z-40 md:max-w-md animate-slide-up"
         >
           <div className="relative overflow-hidden rounded-2xl border border-cyan-400/30 bg-[#0F2744]/95 backdrop-blur-xl p-4 shadow-2xl shadow-cyan-950/60 text-white">
             {/* Top subtle glow highlight */}

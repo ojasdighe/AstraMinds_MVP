@@ -60,8 +60,9 @@ export default function DashboardLayout() {
     const [isDarkMode, setIsDarkMode] = useState(false);
     const [user, setUser] = useState<UserProfile | null>(null);
     const [loading, setLoading] = useState(true);
+    const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
     const [notifications, setNotifications] = useState<AppNotification[]>([
-        { id: Date.now(), title: 'Welcome to Nickle!', desc: 'Start saving to earn XP.', time: 'Just now', type: 'info' }
+        { id: Date.now(), title: 'Welcome to AstraMinds!', desc: 'Start saving to earn XP.', time: 'Just now', type: 'info' }
     ]);
 
     const addNotification = (title: string, desc: string, type: AppNotification['type']) => {
@@ -88,6 +89,7 @@ export default function DashboardLayout() {
     // Re-sync user profile on navigation to keep streak, coins, and XP 100% updated
     useEffect(() => {
         fetchUser();
+        setMobileMenuOpen(false);
     }, [location.pathname]);
 
     const fetchUser = async () => {
@@ -133,17 +135,18 @@ export default function DashboardLayout() {
 
     return (
         <DashboardContext.Provider value={{ user, refreshUser: fetchUser, loading, notifications, addNotification, clearNotifications }}>
-            <div className="dashboard-layout flex h-screen overflow-hidden text-gray-900 dark:text-gray-100 font-body">
-                <Sidebar />
+            <div className="dashboard-layout flex h-[100dvh] w-full overflow-hidden text-gray-900 dark:text-gray-100 font-body">
+                <Sidebar mobileOpen={mobileMenuOpen} onMobileClose={() => setMobileMenuOpen(false)} />
 
-                <div className="dashboard-content-wrapper flex-1 flex flex-col overflow-hidden">
+                <div className="dashboard-content-wrapper flex-1 min-w-0 flex flex-col overflow-hidden">
                     <TopNavbar
+                        onMenuClick={() => setMobileMenuOpen(true)}
                         isDarkMode={isDarkMode}
                         onToggleTheme={toggleTheme}
                         userName={user?.nickname || user?.full_name}
                     />
-                    <main className="flex-1 overflow-y-auto flex flex-col justify-between">
-                        <div className="p-6 flex-1">
+                    <main className="flex-1 overflow-y-auto overflow-x-hidden flex flex-col justify-between">
+                        <div className="p-3 sm:p-4 md:p-6 flex-1 min-w-0">
                             <Outlet />
                         </div>
                         <AppFooter />

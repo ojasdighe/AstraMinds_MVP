@@ -407,3 +407,16 @@ html.dark .card-glow {
 .recharts-tooltip-cursor {
   fill: transparent !important;
 }
+
+/* Responsive safety net (mobile / tablet / laptop) */
+@layer base {
+  html, body { max-width: 100%; overflow-x: hidden; -webkit-text-size-adjust: 100%; }
+  img, video, canvas, svg { max-width: 100%; }
+  button, a, [role="button"] { touch-action: manipulation; }
+  input, select, textarea { font-size: max(16px, 1em); }
+}
+
+@media (max-width: 640px) {
+  .glass-panel { border-radius: 1rem; }
+  .hero-section h1 { word-break: break-word; }
+}

@@ -35,26 +35,40 @@ export default function TopNavbar({ onMenuClick, isDarkMode, onToggleTheme, user
     }, []);
 
     return (
-        <header className="h-20 flex items-center justify-between px-6 border-b-0 border-transparent bg-transparent flex-shrink-0 z-10 relative">
-            <div className="flex items-center gap-4">
+        <header className="h-16 sm:h-20 flex items-center justify-between gap-2 px-3 sm:px-6 border-b-0 border-transparent bg-transparent flex-shrink-0 z-10 relative">
+            <div className="flex items-center gap-2 sm:gap-4 min-w-0">
                 <button
                     onClick={onMenuClick}
-                    className="md:hidden p-2 rounded-xl text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+                    className="md:hidden p-2 rounded-xl text-gray-500 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-white/10 transition-colors flex-shrink-0" aria-label="Open menu"
                 >
                     <Menu className="w-6 h-6" />
                 </button>
                 <div>
-                    <h1 className="font-heading font-bold text-2xl md:text-3xl text-gray-900 dark:text-white leading-tight">
+                    <h1 className="font-heading font-bold text-base sm:text-2xl md:text-3xl text-gray-900 dark:text-white leading-tight truncate">
                         Welcome back, <span className="bg-gradient-to-r from-[#FF7A2F] via-[#0BBFBF] to-[#3B82F6] text-transparent bg-clip-text drop-shadow-[0_0_12px_rgba(11,191,191,0.4)] font-black">{userName?.split(' ')[0] || 'Saver'}</span>
                     </h1>
                 </div>
             </div>
 
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-1.5 sm:gap-3 flex-shrink-0">
                 
+                {/* Compact stats for phones & tablets */}
+                {user && (
+                    <div className="flex xl:hidden items-center gap-1.5">
+                        <div className="flex items-center gap-1 px-2 py-1 rounded-lg bg-orange-500/15 text-orange-300 font-bold text-xs border border-orange-400/20" title="Current Streak">
+                            <Flame className="w-3.5 h-3.5 text-orange-400" />
+                            <span>{user.current_streak || 0}</span>
+                        </div>
+                        <div className="flex items-center gap-1 px-2 py-1 rounded-lg bg-yellow-500/15 text-yellow-300 font-bold text-xs border border-yellow-400/20" title="Available Coins">
+                            <Zap className="w-3.5 h-3.5 text-yellow-400" />
+                            <span>{(user.coins || 0).toLocaleString()}</span>
+                        </div>
+                    </div>
+                )}
+
                 {/* Stats Row */}
                 {user && (
-                    <div className="hidden md:flex items-center gap-2 mr-2 glass-panel p-1.5 rounded-2xl">
+                    <div className="hidden xl:flex items-center gap-2 mr-2 glass-panel p-1.5 rounded-2xl">
                         <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-orange-500/15 text-orange-300 font-bold text-sm border border-orange-400/20 shadow-sm" title="Current Streak">
                             <Flame className="w-4 h-4 text-orange-400" />
                             <span>{user.current_streak || 0}</span>
@@ -103,7 +117,7 @@ export default function TopNavbar({ onMenuClick, isDarkMode, onToggleTheme, user
 
                     {/* Notification Dropdown */}
                     {showNotifs && (
-                        <div className="absolute right-0 mt-3 w-80 glass-panel rounded-2xl shadow-fintech overflow-hidden z-50 transform origin-top-right transition-all">
+                        <div className="absolute right-0 mt-3 w-[calc(100vw-1.5rem)] max-w-xs sm:max-w-none sm:w-80 glass-panel rounded-2xl shadow-fintech overflow-hidden z-50 transform origin-top-right transition-all">
                             <div className="px-4 py-3 border-b border-gray-100 dark:border-white/5 flex justify-between items-center bg-gray-50/50 dark:bg-[#0D1B2A]/50">
                                 <h3 className="font-bold text-sm text-gray-900 dark:text-white">Notifications</h3>
                                 {notifications.length > 0 && (

@@ -17,9 +17,16 @@ const links = [
     { to: '/dashboard/settings', icon: Settings, label: 'Settings' },
 ];
 
-export default function Sidebar() {
+interface SidebarProps {
+    mobileOpen?: boolean;
+    onMobileClose?: () => void;
+}
+
+export default function Sidebar({ mobileOpen = false, onMobileClose }: SidebarProps) {
     const navigate = useNavigate();
-    const [collapsed, setCollapsed] = useState(false);
+    const [collapsedState, setCollapsed] = useState(false);
+    // The mobile drawer is always shown expanded
+    const collapsed = collapsedState && !mobileOpen;
 
     const logout = () => {
         localStorage.removeItem('astraminds_token');
@@ -28,11 +35,19 @@ export default function Sidebar() {
     };
 
     return (
+        <>
+        {/* Mobile backdrop */}
+        <div
+            onClick={onMobileClose}
+            aria-hidden="true"
+            className={`md:hidden fixed inset-0 z-30 bg-black/60 backdrop-blur-sm transition-opacity duration-300 ${mobileOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
+        />
         <aside className={`
-            relative h-full flex flex-col flex-shrink-0
-            border-r-0 border-transparent
-            shadow-none dark:shadow-none transition-all duration-300 ease-in-out z-20
-            ${collapsed ? 'w-20' : 'w-64'}
+            flex flex-col flex-shrink-0 transition-all duration-300 ease-in-out
+            fixed inset-y-0 left-0 z-40 w-72 max-w-[85vw] h-full bg-[#0D1B2A] shadow-2xl
+            ${mobileOpen ? 'translate-x-0' : '-translate-x-full'}
+            md:relative md:inset-auto md:z-20 md:translate-x-0 md:bg-transparent md:shadow-none md:max-w-none
+            ${collapsed ? 'md:w-20' : 'md:w-64'}
         `}>
             {/* Logo / Header */}
             <div className={`flex items-center h-24 border-b-0 border-transparent flex-shrink-0 transition-all duration-300 relative ${collapsed ? 'justify-center px-2' : 'justify-between px-5'}`}>
@@ -97,6 +112,7 @@ export default function Sidebar() {
                         key={to}
                         to={to}
                         end={end}
+                        onClick={onMobileClose}
                         title={collapsed ? label : undefined}
                         className={({ isActive }) =>
                             `flex items-center gap-3 py-3 rounded-xl text-sm font-medium transition-all duration-300 relative group
@@ -138,5 +154,6 @@ export default function Sidebar() {
                 </button>
             </div>
         </aside>
+        </>
     );
 }

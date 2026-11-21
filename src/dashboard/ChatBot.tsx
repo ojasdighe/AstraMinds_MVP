@@ -187,14 +187,14 @@ export default function ChatBot() {
     };
 
     return (
-        <div className="fixed bottom-6 right-6 z-50 flex flex-col items-end gap-4 font-body">
+        <div className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-50 flex flex-col items-end gap-4 font-body">
             {/* Chat window */}
             <div
                 className={`transition-all duration-500 ease-in-out origin-bottom-right ${open ? 'scale-100 opacity-100 mb-0' : 'scale-90 opacity-0 pointer-events-none -mb-10 absolute'
                     }`}
             >
-                <div className="w-[380px] bg-[#0b0b0b] rounded-[24px] shadow-2xl flex flex-col border border-[#1E3448] relative overflow-hidden"
-                    style={{ height: '600px' }}>
+                <div className="w-[calc(100vw-2rem)] sm:w-[380px] max-w-[380px] bg-[#0b0b0b] rounded-[24px] shadow-2xl flex flex-col border border-[#1E3448] relative overflow-hidden"
+                    style={{ height: 'min(600px, calc(100dvh - 7rem))' }}>
 
                     {/* Header */}
                     <div className="px-5 py-4 border-b border-[#1E3448] flex items-center justify-between bg-[#0b0b0b] z-10">

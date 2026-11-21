@@ -1,5 +1,5 @@
 // AstraMinds PWA Service Worker
-const CACHE_NAME = 'astraminds-pwa-v1';
+const CACHE_NAME = 'astraminds-pwa-v2';
 const PRECACHE_ASSETS = [
   '/',
   '/AstraMinds.ico',
